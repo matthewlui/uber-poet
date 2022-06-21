@@ -19,7 +19,7 @@ import random
 from toposort import toposort_flatten
 
 from .util import merge_lists
-
+from .util import xrange
 
 class ModuleGenType(object):
     flat = 'flat'
@@ -70,6 +70,18 @@ class ModuleNode(object):
         extra = True if self.extra_info else False
         return "<{} : {} deps: {} has_info: {}>".format(self.name, self.node_type, len(self.deps), extra)
 
+    def __lt__(self, other):
+        return self.name < other.name
+
+    def __gt__(self, other):
+        return self.name > other.name
+
+    def __le__(self, other):
+        return (self < other) or (self == other)
+
+    def __ge__(self, other):
+        return (self > other) or (self == other)
+
     @staticmethod
     def gen_layered_graph(layer_count, nodes_per_layer, deps_per_node=5):
         """Generates a module dependency graph that has `layer_count` layers,
@@ -89,7 +101,7 @@ class ModuleNode(object):
             lower_merged = merge_lists(lower_layers)
             for node in layer:
                 if deps_per_node < len(lower_merged):
-                    node.deps = random.sample(lower_merged, deps_per_node)
+                    node.deps = random.sample(lower_merged, int(deps_per_node))
                 else:
                     node.deps = lower_merged
 

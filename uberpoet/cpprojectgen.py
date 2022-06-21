@@ -23,7 +23,7 @@ from . import locreader
 from .filegen import Language, ObjCHeaderFileGenerator, ObjCSourceFileGenerator, SwiftFileGenerator
 from .loccalc import LOCCalculator
 from .moduletree import ModuleNode
-from .util import first_in_dict, first_key, makedir
+from .util import first_in_dict, first_key, makedir, xrange
 
 
 class CocoaPodsProjectGenerator(object):
@@ -133,7 +133,7 @@ class CocoaPodsProjectGenerator(object):
 
         self.copy_resource("Info.plist", join(app_module_dir, "Info.plist"))
 
-        for name, text in app_files.iteritems():
+        for name, text in app_files.items():
             self.write_file(join(app_module_dir, name), text)
 
         if loc_json_file_path:
@@ -215,7 +215,7 @@ class CocoaPodsProjectGenerator(object):
         self.write_file(pod_path, pod_text)
 
         # Write Swift Files
-        for file_name, file_obj in files.iteritems():
+        for file_name, file_obj in files.items():
             file_path = join(files_dir_path, file_name)
             self.write_file(file_path, file_obj.text)
             file_obj.text = ""  # Save memory after write

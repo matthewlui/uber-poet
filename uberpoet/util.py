@@ -23,6 +23,10 @@ class SeedContainer(object):
     seed = 0
 
 
+def xrange(a_range):
+    return range(int(a_range))
+
+
 def bool_xor(a, b):
     """Python's ^ operator is a bitwise xor, so we need to make a boolean equivalent function."""
     return (a and not b) or (not a and b)
@@ -37,14 +41,14 @@ def seed():
 def first_in_dict(d):
     """Grabs the value returned by the first value in d.keys()"""
     if len(d) > 0:
-        k = d.keys()[0]
+        k = list(d.keys())[0]
         return d[k]
     return None
 
 
 def first_key(dictionary_var):
     """dictionary_var.keys()[0]"""
-    return dictionary_var.keys()[0]
+    return list(dictionary_var.keys())[0]
 
 
 def makedir(path):
